@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template}">
+      <link rel="stylesheet" type="text/css"
+href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ordinateurs</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="card">
+<div class="card-header">
+Ordinateurs
+</div>
+<div class="card-body">
+    <table align='center' width='100%'><tr><td>
+                <form class="search-box" name="searchForm" th:action="@{search}" method="GET">
+                    </aside>
+                   <div th:if="${mode!='Searchcat'}">
+                    <div class="form-group"> 
+                    <label class="control-label">Chercher Par Nom Ordinateur :</label>
+                    <input type="search" id="myInput" name='nom' class="form-control" placeholder="Chercher Nom Produit..." th:value="${nom}" />
+                    </div></div>
+                    </aside>
+                </form>
+                </td>
+                <td></td> <td></td> <td></td>
+<td>
+           <form class="search-box" name="searchFormCat" th:action="@{searchCat}" method="GET">
+                    </aside> 
+                 
+                    <div class="form-group"> 
+<label class="control-label">Chercher Par Marque:</label>
+ <select name="cat" class="form-control" th:if= "${!#strings.isEmpty(marques)}"  onchange="this.form.submit()" required>  
+<option> selected </option>
+ <option th:each="c : ${marques}" th:value="${c.idMarque}" th:text="${c.nomMarque}"></option>
+ </select>
+                    </div>
+                    </aside>
+                </form>
+             </td></tr></table>
+
+
+
+<table class="table table-striped">
+<tr>
+<th>ID</th><th>Nom</th><th>Prix</th><th>Date de creation </th><th>Marque</th><th></th><th></th>
+</tr>
+<tr th:each="p:${ordinateur}">
+<td th:text="${p.idOrdinateur}"></td>
+<td th:text="${p.nomOrdinateur}"></td>
+<td th:text="${p.PrixOrdinateur}"></td>
+<td th:text="${p.dateCreation}"></td>
+
+<td th:if= "${!#strings.isEmpty(p.marque)}" th:text="${p.marque.nomMarque}"></td>  
+  <td th:if= "${#strings.isEmpty(p.marque)}" th:text="${'Pas de Band'}"></td>
+
+   
+<td><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')" th:href="@{supprimerProduit(id=${p.idOrdinateur},
+page=${currentPage},size=${size})}">Supprimer</a></td>
+<td><a class="btn btn-success"
+th:href="@{modifierProduit(id=${p.idOrdinateur})}">Editer</a></td>
+</tr>
+</table>
+<ul class="nav nav-pills">
+<li th:each="page,status:${pages}">
+<a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+th:href="@{ ListeProduits(page=${status.index}, size=${size} ) }"
+th:text="${status.index }"></a>
+</li>
+</ul>
+
+
+
+
+<hr>
+      <center> <div th:if="${mode=='Searchcat'}">
+      <a th:href="@{ListeProduits}" ><button type="button" class="btn btn-primary">Retour</button></a>
+          </div></center>
+          
+           <center> <div th:if="${mode=='SearchNomP'}">
+      <a th:href="@{ListeProduits}" ><button type="button" class="btn btn-primary">Retour</button></a>
+          </div></center>
+
+
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</htm>

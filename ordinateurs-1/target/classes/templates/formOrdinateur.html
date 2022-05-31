@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template}">
+      <link rel="stylesheet" type="text/css"
+href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ordinateur</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="card">
+<div class="card">
+<div class="card-header" th:if="${mode=='new'}"> Ajout Ordinateurs </div>
+<div class="card-header" th:if="${mode=='edit'}">Editer Ordinateurs
+</div>
+<div class="card-body">
+<form th:action="@{saveProduit}" method="post">
+<div class="form-group">
+<label class="control-label" hidden>ID Ordinateur :</label>
+<input type="hidden" name="idOrdinateur" class="form-control"
+th:value="${ordinateur.idOrdinateur}" />
+</div>
+<div class="form-group">
+<label class="control-label">Nom Ordinateur :</label>
+<input type="text" name="nomOrdinateur" class="form-control"
+th:value="${ordinateur.nomOrdinateur}" />
+<span th:errors=${ordinateur.nomOrdinateur} class="text-danger"> </span>
+</div>
+<div class="form-group">
+<label class="control-label">Prix Ordinateur :</label>
+<input type="text" name="PrixOrdinateur" class="form-control"
+th:value="${ordinateur.PrixOrdinateur}" />
+<span th:errors=${ordinateur.PrixOrdinateur} class="text-danger"> </span>
+</div>
+
+<div class="form-group">
+<label class="control-label">Date creation :</label>
+<input type="date" name="dateCreation" class="form-control"
+th:value="${ordinateur.dateCreation}"/>
+<span th:errors=${ordinateur.dateCreation} class="text-danger"> </span>
+</div>
+
+<div th:if="${mode=='new'}">
+<div class="form-group"> 
+<label class="control-label">Marque :</label>
+ <select name="marque" class="form-control" required>
+ <option th:each="c : ${marques}" th:value="${c.idMarque}" th:text="${c.nomMarque}"></option>
+ </select>
+</div>
+</div>
+
+<div th:if="${mode=='edit'}">
+<div class="form-group"> 
+<label class="control-label">Marque :</label>
+ <select name="marque" class="form-control" required>
+  <option th:value="${ordinateur.marque.idMarque}" th:text="${ordinateur.marque.nomMarque}" selected></option>
+ <option th:each="c : ${marques}" th:value="${c.idMarque}" th:text="${c.nomMarque}"></option>
+ </select>
+</div>
+</div>
+
+
+
+
+
+
+
+<div>
+<button type="submit" class="btn btn-primary" th:if="${mode=='new'}">Ajouter</button>
+<button type="submit" class="btn btn-primary" th:if="${mode=='edit'}">Save</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

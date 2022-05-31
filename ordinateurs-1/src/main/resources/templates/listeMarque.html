@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template}">
+      <link rel="stylesheet" type="text/css"
+href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Marques</title>
+</head>
+<body>
+<div layout:fragment="Mycontent">
+<div class="container mt-5">
+<div class="card">
+<div class="card-header">
+Marques
+</div>
+<div class="card-body">
+<table class="table table-striped">
+<tr>
+<th>ID</th><th>Nom</th><th></th><th></th>
+</tr>
+<tr th:each="p:${marques}">
+<td th:text="${p.idMarque}"></td>
+<td th:text="${p.nomMarque}"></td>
+
+<td><a class="btn btn-danger" onclick="return confirm('Etes-vous sûr ?')" th:href="@{supprimerMarque(id=${p.idMarque},
+page=${currentPage},size=${size})}">Supprimer</a></td>
+<td><a class="btn btn-success"
+th:href="@{modifierMarque(id=${p.idMarque})}">Editer</a></td>
+</tr>
+</table>
+<ul class="nav nav-pills">
+<li th:each="page,status:${pages}">
+<a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+th:href="@{ ListeMarques(page=${status.index}, size=${size} ) }"
+th:text="${status.index }"></a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</htm>
